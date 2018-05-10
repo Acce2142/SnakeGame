@@ -1,0 +1,10 @@
+PLAYER1 = (keypressed1->keypressedRead1->PLAYER1).
+PLAYER2 = (keypressed2->keypressedRead2->PLAYER2).
+PLAYER3 = (keypressed3->keypressedRead3->PLAYER3).
+PLAYER4 = (keypressed4->keypressedRead4->PLAYER4).
+SERVER = (keypressed1->BUFFERC1|keypressed2->BUFFERC2|keypressed3->BUFFERC3|keypressed4->BUFFERC4),
+BUFFERC1 = (keypressed1->SERVER),
+BUFFERC2 = (keypressed2->SERVER),
+BUFFERC3 = (keypressed3->SERVER),
+BUFFERC4 = (keypressed4->SERVER).
+||SERVERCONTROLL = (PLAYER1||PLAYER2||PLAYER3||PLAYER4||SERVER). 

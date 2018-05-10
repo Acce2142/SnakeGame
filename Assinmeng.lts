@@ -1,0 +1,19 @@
+PLAYER1 = (keypressed1->PLAYER1|die1->DIED1|alive1->PLAYER1),
+LOGIN1 = (login1->PLAYER1),
+SERVER1 = (keypressedRead1->SERVER1|die1->LOGIN1),
+DIED1 = (revive1->PLAYER1|logout1->LOGIN1).
+
+PLAYER2 = (keypressed2->PLAYER2|die2->DIED2|alive2->PLAYER2),
+LOGIN2 = (login2 -> PLAYER2),
+SERVER2 = (keypressedRead2->SERVER2|die2->LOGIN2),
+DIED2 = (revive2->PLAYER2|logout2->LOGIN2).
+
+BUFFERC1 = (keypressed1->FULLB1),
+FULLB1 = (keypressedRead1->BUFFERC1).
+
+BUFFERC2 = (keypressed2->FULLB2),
+FULLB2 = (keypressedRead2->BUFFERC2).
+
+GAMEBOARD = (keypressedRead1 ->WAIT | keypressedRead2 ->WAIT ),
+WAIT = ({alive1,alive2}->GAMEBOARD|{die1,die2}->GAMEBOARD).
+||SERVERCONTROLL = (PLAYER1||PLAYER2||GAMEBOARD||BUFFERC1||BUFFERC2||SERVER1||SERVER2). 
