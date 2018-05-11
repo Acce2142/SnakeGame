@@ -35,7 +35,7 @@ public class ThreadPool {
 	 */
 	public synchronized void execute(Runnable task) throws Exception {
 		if (this.isStopped) throw new IllegalStateException("ThreadPool is stopped");
-		this.taskQueue.enqueue(task);
+		this.taskQueue.put(task);
 	}
 	
 	/**

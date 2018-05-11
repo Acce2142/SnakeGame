@@ -24,7 +24,7 @@ public class ServerThread extends Thread {
 	public void run() {
 		while (!isStopped()) {
 			try {
-				Runnable runnable = (Runnable) taskQueue.dequeue();
+				Runnable runnable = (Runnable) taskQueue.take();
 				pool.submit(runnable);
 			}
 			catch (Exception e) {

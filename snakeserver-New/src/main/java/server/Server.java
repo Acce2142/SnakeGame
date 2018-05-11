@@ -32,7 +32,6 @@ public class Server {
         });
         mBoard = new GameBoard();
     }
-
     private void start() {
         mServerThread.start();
         mLoginThread.start();

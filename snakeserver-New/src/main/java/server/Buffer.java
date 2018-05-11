@@ -16,7 +16,7 @@ public class Buffer {
 		mLimit = limit;
 	}
 	
-	public synchronized void enqueue(Object item) throws InterruptedException {
+	public synchronized void put(Object item) throws InterruptedException {
 		int oldCount = -1;
 		while (count.get() == mLimit) wait();
 		mQueue.add(item);
@@ -26,7 +26,7 @@ public class Buffer {
 		}
 	}
 	
-	public synchronized Object dequeue() throws InterruptedException {
+	public synchronized Object take() throws InterruptedException {
 		int oldCount = -1;
 		while (count.get() == 0) wait();
 		Object res = mQueue.remove();

@@ -69,7 +69,7 @@ public class GameBoard {
             nodeList.removeSnake(snake);
         } else {
         	try {
-				mQueue.enqueue(new Runnable() {
+				mQueue.put(new Runnable() {
 					@Override
 					public void run() {
 						redraw();
