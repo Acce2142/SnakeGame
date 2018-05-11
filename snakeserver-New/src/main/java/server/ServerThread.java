@@ -7,14 +7,14 @@ import java.util.concurrent.Executors;
 public class ServerThread extends Thread {
 	//comsumer
 	//Declare blocking queue
-	private BlockingQueue taskQueue;
+	private Buffer taskQueue;
 	private boolean isStopped = false;
 	private final ExecutorService pool = Executors.newFixedThreadPool(100);
 	/**
 	 * Constructor for the PoolThread
 	 * @param queue
 	 */
-	public ServerThread(BlockingQueue queue) {
+	public ServerThread(Buffer queue) {
 		taskQueue = queue;
 	}
 	

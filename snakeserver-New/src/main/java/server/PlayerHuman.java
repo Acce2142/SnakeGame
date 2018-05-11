@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PlayerHuman extends Player implements Runnable {
-	private Buffer playerBuf2fer;
 	private PrintWriter mOut;
 	private BufferedReader mIn;
 	private MapDBUtil mDb;
@@ -75,8 +74,10 @@ public class PlayerHuman extends Player implements Runnable {
                     String password = mIn.readLine().substring(10);
                     System.out.println("username = " + username);
                     System.out.println("password = " + password);
-                    boolean login = !username.isEmpty() && !password.isEmpty()
-                            && mDb.getPlayerPassword(username).equals(password);
+                    boolean login = !username.isEmpty() & !password.isEmpty() 
+                    		& mDb.getPlayerPassword(username).equals(password);
+                    System.out.println(!username.isEmpty() & !password.isEmpty() 
+                    		& mDb.getPlayerPassword(username).equals(password));
                     if (login) {
                         mStarted = true;
                         mOut.println("Login: success");
@@ -88,8 +89,8 @@ public class PlayerHuman extends Player implements Runnable {
                 if (inputLine.startsWith("Register:")) {
                     String username = inputLine.substring(10);
                     String password = mIn.readLine().substring(10);
-                    boolean exist = !username.isEmpty() && !password.isEmpty()
-                            && mDb.getPlayerPassword(username) != null;
+                    boolean exist = !username.isEmpty() & !password.isEmpty()
+                            & mDb.getPlayerPassword(username) != null;
                     if (!exist) {
                         mDb.storePlayer(username, password);
                         mOut.println("Register: success");
@@ -116,7 +117,6 @@ public class PlayerHuman extends Player implements Runnable {
 			System.out.println(e.getMessage());
 			System.err.println("client error, please restart your client");
 		}
-		
 	}
 	@Override
     public void play() {

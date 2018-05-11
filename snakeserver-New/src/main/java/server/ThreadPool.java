@@ -8,7 +8,7 @@ import java.util.List;
 public class ThreadPool {
 	
 	//Declare blocking queue
-	private BlockingQueue taskQueue = null;
+	private Buffer taskQueue = null;
 	private List<ServerThread> threads = new ArrayList<ServerThread>();
 	private boolean isStopped = false;
 	
@@ -19,7 +19,7 @@ public class ThreadPool {
 	 * @param maxTasks
 	 */
 	public ThreadPool(int threadNumer, int maxTasks) {
-		taskQueue = new BlockingQueue(maxTasks);
+		taskQueue = new Buffer(maxTasks);
 		
 		for (int i = 0; i < threadNumer; i++) {
 			threads.add(new ServerThread(taskQueue));

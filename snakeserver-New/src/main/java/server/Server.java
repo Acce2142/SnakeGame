@@ -10,11 +10,11 @@ import java.util.concurrent.Executors;
 public class Server {
     private ServerThread mServerThread;
     private Thread mLoginThread;
-    private BlockingQueue mQueue;
+    private Buffer mQueue;
     private GameBoard mBoard;
     private final ExecutorService pool = Executors.newFixedThreadPool(100);
     private Server() {
-        mQueue = new BlockingQueue(100);
+        mQueue = new Buffer(100);
         mServerThread = new ServerThread(mQueue);
         mLoginThread = new Thread(new Runnable() {
             @Override
@@ -22,7 +22,6 @@ public class Server {
                 boolean listening= true;
                 try (ServerSocket socket = new ServerSocket(8080)) {
                     while (listening) {
-                    	
                     	pool.submit(new PlayerHuman("Human", mBoard, socket.accept()));
                     }
                 } catch (IOException e) {

@@ -1,5 +1,5 @@
 package tools;
-import server.BlockingQueue;
+import server.Buffer;
 import server.ServerThread;
 import server.Snake;
 
@@ -23,7 +23,7 @@ public class GameBoard {
 	private JFrame mainWindow;
     private NodeList nodeList = new NodeList(HEIGHT, WIDTH);
     private ServerThread mThread;
-    private BlockingQueue mQueue;
+    private Buffer mQueue;
     
 	public GameBoard(){
 		mainWindow = new JFrame("Snake Game");
@@ -36,7 +36,7 @@ public class GameBoard {
 		}
 		mainWindow.setVisible(true);
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mQueue = new BlockingQueue(100);
+		mQueue = new Buffer(100);
 		mThread = new ServerThread(mQueue);
 	}
 
