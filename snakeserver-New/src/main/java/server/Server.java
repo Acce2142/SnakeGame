@@ -15,7 +15,8 @@ public class Server {
     private Buffer mQueue;
 
     private GameBoard mBoard;
-    private final ExecutorService pool = Executors.newFixedThreadPool(100);
+    private final ExecutorService AIPool = Executors.newFixedThreadPool(4);
+    private final ExecutorService PlayerPool = Executors.newFixedThreadPool(1);
     private Server() {
         mQueue = new Buffer(100);
         mServerThread = new ServerThread(mQueue);
@@ -25,7 +26,7 @@ public class Server {
                 boolean listening= true;
                 try (ServerSocket socket = new ServerSocket(8080)) {
                     while (listening) {
-                    	pool.submit(new PlayerHuman("Human", mBoard, socket.accept()));
+                    	PlayerPool.submit(new PlayerHuman("Human", mBoard, socket.accept()));
                     }
                 } catch (IOException e) {
                     System.err.println("server failed");
@@ -41,7 +42,7 @@ public class Server {
         mBoard.start();
         for (int i = 0; i < 5; ++i) {
         	Runnable myAIRunnable = new PlayerAI("AI", mBoard);
-        	pool.submit(myAIRunnable);
+        	AIPool.submit(myAIRunnable);
         }
     }
 
