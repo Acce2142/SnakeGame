@@ -21,9 +21,6 @@ import java.net.UnknownHostException;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-
 import javax.swing.JButton;
 
 public class Client implements ActionListener {
@@ -192,14 +189,12 @@ public class Client implements ActionListener {
                     mDisplayMessage.setText("RIGHT");
                 }
             }
-
             @Override
             public void keyReleased(KeyEvent e) {
 
             }
         });
     }
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();

@@ -4,8 +4,6 @@ import server.ServerThread;
 import server.Snake;
 
 import java.awt.GridLayout;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.swing.JFrame;
 
@@ -19,12 +17,10 @@ public class GameBoard {
     public static int FOOD = 2;
 	public static int HEIGHT = 100;
 	public static int WIDTH = 100;
-	
 	private JFrame mainWindow;
     private NodeList nodeList = new NodeList(HEIGHT, WIDTH);
     private ServerThread mThread;
     private Buffer mQueue;
-    
 	public GameBoard(){
 		mainWindow = new JFrame("Snake Game");
 		mainWindow.setBounds(0, 0, 1000, 1000);
@@ -44,7 +40,7 @@ public class GameBoard {
 	    mainWindow.revalidate();
 	    mainWindow.repaint();
     }
-	synchronized public int updateSnake(Snake snake) {
+	synchronized public int updateSnake(Snake snake) throws InterruptedException {
 	    Pair next = snake.nextPair();
 	    Node node = nodeList.getNode(next);;
 	    boolean dead = true;
@@ -67,6 +63,7 @@ public class GameBoard {
         if (dead) {
 	        state = 1;
             nodeList.removeSnake(snake);
+            System.out.println("player die");
         } else {
         	try {
 				mQueue.put(new Runnable() {

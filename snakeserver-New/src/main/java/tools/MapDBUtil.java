@@ -5,10 +5,9 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
 
-import server.Player;
 
 public class MapDBUtil {
-
+	
 	private static final DB db = DBMaker.fileDB("data.db")
 			.closeOnJvmShutdown()
 			.checksumHeaderBypass()
@@ -24,4 +23,7 @@ public class MapDBUtil {
 		return btreeMap.get(name);
 	}
 
+public static void main(String arg[]){
+	MapDBUtil newMap = new MapDBUtil();
+}
 }

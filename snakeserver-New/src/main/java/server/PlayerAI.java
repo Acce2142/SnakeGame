@@ -32,9 +32,9 @@ public class PlayerAI extends Player implements Runnable {
 		    	ins = random.nextInt(directions.size());
 			}
 		    instruction(ins);
-		    mDead = (mBoard.updateSnake(mSnake) & 1) > 0;
 		    try {
-		        Thread.sleep(800);
+		    	mDead = (mBoard.updateSnake(mSnake) & 1) > 0;
+		        Thread.sleep(200);
             } catch (InterruptedException e) {
 
             }

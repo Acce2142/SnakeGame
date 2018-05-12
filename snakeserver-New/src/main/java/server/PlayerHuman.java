@@ -8,23 +8,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PlayerHuman extends Player implements Runnable {
 	private PrintWriter mOut;
 	private BufferedReader mIn;
 	private MapDBUtil mDb;
-
 	private Thread mPlayThread;
 	private boolean mStarted;
 	private AtomicInteger mCurrentIns;
 
 	public PlayerHuman(String name, GameBoard board, Socket socket) {
 		super(name, board);
-		
-		mDb = new MapDBUtil();
 		try {
 			mOut = new PrintWriter(socket.getOutputStream(), true);
 			mIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -32,7 +27,7 @@ public class PlayerHuman extends Player implements Runnable {
 			System.err.println("IO Error");
 			System.exit(1);
 		}
-
+		mDb = new MapDBUtil();
 		mCurrentIns = new AtomicInteger(Player.LEFT);
 		mPlayThread = new Thread(new Runnable() {
             @Override
@@ -50,7 +45,7 @@ public class PlayerHuman extends Player implements Runnable {
                                 mOut.println("Dead");
                             }
                         }
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                     	
                     }
@@ -66,7 +61,7 @@ public class PlayerHuman extends Player implements Runnable {
 		
 		try {
 		    mPlayThread.start();
-			String inputLine, outputLine;
+			String inputLine;
 			while ((inputLine = mIn.readLine()) != null) {
 			    if (mDead) continue;
                 if (inputLine.startsWith("Login:")) {
@@ -74,13 +69,15 @@ public class PlayerHuman extends Player implements Runnable {
                     String password = mIn.readLine().substring(10);
                     System.out.println("username = " + username);
                     System.out.println("password = " + password);
-                    boolean login = !username.isEmpty() & !password.isEmpty() 
-                    		& mDb.getPlayerPassword(username).equals(password);
-                    System.out.println(!username.isEmpty() & !password.isEmpty() 
-                    		& mDb.getPlayerPassword(username).equals(password));
+                    boolean login = !username.isEmpty() && !password.isEmpty() 
+                    		&& mDb.getPlayerPassword(username).equals(password);
+                    System.out.println(!username.isEmpty() && !password.isEmpty() 
+                    		&& mDb.getPlayerPassword(username).equals(password));
+                    System.out.println(mDb.getPlayerPassword(username));
                     if (login) {
                         mStarted = true;
                         mOut.println("Login: success");
+                  
                     } else {
                         mOut.println("Login: failed");
                     }
@@ -89,8 +86,8 @@ public class PlayerHuman extends Player implements Runnable {
                 if (inputLine.startsWith("Register:")) {
                     String username = inputLine.substring(10);
                     String password = mIn.readLine().substring(10);
-                    boolean exist = !username.isEmpty() & !password.isEmpty()
-                            & mDb.getPlayerPassword(username) != null;
+                    boolean exist = !username.isEmpty() && !password.isEmpty()
+                            && mDb.getPlayerPassword(username) != null;
                     if (!exist) {
                         mDb.storePlayer(username, password);
                         mOut.println("Register: success");

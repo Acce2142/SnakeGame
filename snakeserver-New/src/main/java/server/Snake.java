@@ -13,6 +13,7 @@ public class Snake {
     private int direction;
     private ArrayList<Pair> mBody;
     private Color mColor;
+    private Player player;
     private Snake(Color color) {
         direction = Player.LEFT;
         mBody = new ArrayList<>();
@@ -71,5 +72,8 @@ public class Snake {
             }
         }
         return false;
+    }
+    public String getPlayerName(){
+    	return player.mName;
     }
 }

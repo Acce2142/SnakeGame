@@ -18,6 +18,7 @@ public abstract class Player {
 	final protected GameBoard mBoard;
 	protected boolean mDead;
 	
+	@SuppressWarnings("static-access")
 	public Player(String name, GameBoard board) {
 		mName = name;
 		mBoard = board;
