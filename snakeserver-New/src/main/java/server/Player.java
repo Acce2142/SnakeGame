@@ -1,9 +1,10 @@
 package server;
 
-import tools.GameBoard;
-
 import java.awt.*;
 import java.util.Random;
+
+import tools.GameBoard;
+import tools.Pair;
 
 public abstract class Player {
 	//UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3
@@ -26,7 +27,7 @@ public abstract class Player {
 		int x = random.nextInt(mBoard.WIDTH);
 		int y = random.nextInt(mBoard.HEIGHT);
 		Color color = new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
-		mSnake = Snake.create(x, y, mBoard.WIDTH, mBoard.HEIGHT, LENGTH, color);
+		mSnake = Snake.create(new Pair(x,y), mBoard.WIDTH, mBoard.HEIGHT, LENGTH, color);
 		mDead = false;
 	}
 

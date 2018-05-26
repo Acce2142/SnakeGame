@@ -1,11 +1,12 @@
 package tools;
 
-import server.Snake;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import server.Snake;
 
 public class NodeList {
 
@@ -36,14 +37,14 @@ public class NodeList {
     }
 
     public void removeSnake(Snake snake) {
-	    ArrayList<Pair> body = snake.getBody();
+	    CopyOnWriteArrayList<Pair> body = snake.getBody();
         for (int i = 0; i < body.size(); ++i) {
             getNode(body.get(i)).resetColor();
         }
     }
 
     public void drawSnake(Snake snake) {
-        ArrayList<Pair> body = snake.getBody();
+        CopyOnWriteArrayList<Pair> body = snake.getBody();
         for (int i = 0; i < body.size(); ++i) {
             getNode(body.get(i)).setSnake(snake.getColor());
         }

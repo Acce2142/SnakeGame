@@ -24,6 +24,6 @@ public class MapDBUtil {
 	}
 
 public static void main(String arg[]){
-	MapDBUtil newMap = new MapDBUtil();
+	//MapDBUtil newMap = new MapDBUtil();
 }
 }

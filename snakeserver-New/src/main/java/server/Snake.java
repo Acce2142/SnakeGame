@@ -1,40 +1,40 @@
 package server;
 
-import tools.GameBoard;
-import tools.Pair;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import tools.GameBoard;
+import tools.Pair;
 
 public class Snake {
     static private int[] dx = new int[]{-1, 1, 0, 0};
     static private int[] dy = new int[]{0, 0, -1, 1};
     private int direction;
-    private ArrayList<Pair> mBody;
+    private CopyOnWriteArrayList<Pair> mBody;
     private Color mColor;
     private Player player;
     private Snake(Color color) {
         direction = Player.LEFT;
-        mBody = new ArrayList<>();
+        mBody = new CopyOnWriteArrayList<>();
         mColor = color;
     }
 
-    public static Snake create(int x, int y, int width, int height, int length, Color color) {
+    public static synchronized Snake create(Pair head, int width, int height, int length, Color color) {
         Random random = new Random();
         Snake snake = new Snake(color);
-        int curX = x;
-        int curY = y;
+        int curX = head.getKey1();
+        int curY = head.getKey2();
         for (int i = 0; i < length; ++i) {
-            Pair key = new Pair(curY, curX);
-            snake.mBody.add(key);
+        	head = new Pair(curX,curY);
+            snake.mBody.add(head);
             int k = random.nextInt(4);
             curX = (curX + dx[k] + width) % width;
             curY = (curY + dy[k] + height) % height;
         }
         return snake;
     }
-
     public void move(boolean grow) {
         Pair newPair = nextPair();
         mBody.add(0, newPair);
@@ -57,7 +57,7 @@ public class Snake {
         return direction;
     }
 
-    public ArrayList<Pair> getBody() {
+    public CopyOnWriteArrayList<Pair> getBody() {
         return mBody;
     }
 

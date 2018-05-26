@@ -157,7 +157,6 @@ public class Client implements ActionListener {
         JLabel label = new JLabel("Press up/down/left/right to control", JLabel.CENTER);
         label.setBounds(20, 50, 260, 30);
         panel.add(label);
-
         mDisplayMessage = new JLabel("", JLabel.CENTER);
         mDisplayMessage.setBounds(100, 100, 80, 40);
         panel.add(mDisplayMessage);

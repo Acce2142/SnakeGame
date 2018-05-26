@@ -1,11 +1,11 @@
 package tools;
-import server.Buffer;
-import server.ServerThread;
-import server.Snake;
-
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+
+import server.Buffer;
+import server.ServerThread;
+import server.Snake;
 
 /*
  * producers
@@ -40,6 +40,9 @@ public class GameBoard {
 	    mainWindow.revalidate();
 	    mainWindow.repaint();
     }
+	synchronized public void snakeKiller(Snake snake){
+		nodeList.drawSnake(snake);
+	}
 	synchronized public int updateSnake(Snake snake) throws InterruptedException {
 	    Pair next = snake.nextPair();
 	    Node node = nodeList.getNode(next);;
@@ -63,7 +66,7 @@ public class GameBoard {
         if (dead) {
 	        state = 1;
             nodeList.removeSnake(snake);
-            System.out.println("player die");
+            //System.out.println("player die");
         } else {
         	try {
 				mQueue.put(new Runnable() {
@@ -73,7 +76,8 @@ public class GameBoard {
 					}
 				});
 			} catch (InterruptedException e) {
-				System.out.println("player quit");
+				//System.out.println("player quit 2");
+				
 			}
 			
         }
@@ -83,7 +87,4 @@ public class GameBoard {
 	public void start() {
 	    mThread.start();
     }
-
-	public static void main(String[] args) throws Exception{
-	}
 }

@@ -1,10 +1,10 @@
 package server;
 
-import tools.GameBoard;
-import tools.Pair;
-
 import java.util.ArrayList;
 import java.util.Random;
+
+import tools.GameBoard;
+import tools.Pair;
 
 public class PlayerAI extends Player implements Runnable {
 	private Thread mThread;
