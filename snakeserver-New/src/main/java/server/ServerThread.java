@@ -9,7 +9,6 @@ public class ServerThread extends Thread {
 	//Declare blocking queue
 	private Buffer taskQueue;
 	private boolean isStopped = false;
-	private final ExecutorService pool = Executors.newFixedThreadPool(100);
 	/**
 	 * Constructor for the PoolThread
 	 * @param queue
@@ -25,7 +24,7 @@ public class ServerThread extends Thread {
 		while (!isStopped()) {
 			try {
 				Runnable runnable = (Runnable) taskQueue.take();
-				pool.submit(runnable);
+				runnable.run();
 			}
 			catch (Exception e) {
 				// log or otherwise report exception,
@@ -39,7 +38,7 @@ public class ServerThread extends Thread {
 	 */
 	public synchronized void doStop() {
 		isStopped = true;
-		// break pool thread out of dequeue() call.
+		
 		this.interrupt();
 	}
 	/*

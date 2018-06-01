@@ -40,7 +40,7 @@ public class Client implements ActionListener {
 
 	private PrintWriter mOut;
 	private BufferedReader command;
-
+	private int fail = 0;
 	private boolean mDead = false;
 	private int mScore;
 	/**
@@ -52,7 +52,9 @@ public class Client implements ActionListener {
 
 		try {
             Socket socket = new Socket(InetAddress.getByName(null), 8080);
+            //all the output operations to the server
             mOut = new PrintWriter(socket.getOutputStream(), true);
+            //all the response from the server
             command = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (UnknownHostException e) {
 		    System.err.println("Don't know about host");
@@ -74,12 +76,22 @@ public class Client implements ActionListener {
                         }
                         if (fromServer.equals("Login: failed")) {
                             message.setText("Login failed");
+                            fail++;
+                            if(fail > 3) {
+                            	System.err.println("Have a nice day");
+                            	System.exit(1);
+                            }
                         }
                         if (fromServer.equals("Register: success")) {
                             message.setText("Register succeed");
                         }
                         if (fromServer.equals("Register: failed")) {
                             message.setText("Register failed");
+                            fail++;
+                            if(fail > 3) {
+                            	System.err.println("Have a nice day");
+                            	System.exit(1);
+                            }
                         }
                         if (fromServer.equals("Score")) {
                             mScore ++;

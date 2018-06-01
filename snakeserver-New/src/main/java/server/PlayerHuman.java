@@ -22,7 +22,9 @@ public class PlayerHuman extends Player implements Runnable {
 	public PlayerHuman(String name, GameBoard board, Socket socket) {
 		super(name, board);
 		try {
+			//output
 			mOut = new PrintWriter(socket.getOutputStream(), true);
+			//input from the client
 			mIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
 			System.err.println("IO Error");
@@ -62,13 +64,16 @@ public class PlayerHuman extends Player implements Runnable {
 		try {
 		    mPlayThread.start();
 			String inputLine;
+			//read input from the client
 			while ((inputLine = mIn.readLine()) != null) {
 			    if (mDead) continue;
+			    // if the packet is a login packet
                 if (inputLine.startsWith("Login:")) {
                     String username = inputLine.substring(7);
                     String password = mIn.readLine().substring(10);
                     System.out.println("username = " + username);
                     System.out.println("password = " + password);
+                    //verifiy the password and username
                     boolean login = !username.isEmpty() && !password.isEmpty()&& mDb.getPlayerPassword(username) !=null;
                     System.out.println(login);
                     if (login) {
@@ -81,7 +86,7 @@ public class PlayerHuman extends Player implements Runnable {
                         mOut.println("Login: failed");
                     }
                 }
-
+                //if it is a register packet
                 if (inputLine.startsWith("Register:")) {
                     String username = inputLine.substring(10);
                     String password = mIn.readLine().substring(10);
@@ -95,6 +100,7 @@ public class PlayerHuman extends Player implements Runnable {
                         mOut.println("Register: failed");
                     }
                 }
+              //if it is a instruction packet
                 if (inputLine.startsWith("Instruction:") && mStarted) {
                     final String instructions = inputLine.substring(13);
                     if (instructions.equals("UP")) {
@@ -118,8 +124,4 @@ public class PlayerHuman extends Player implements Runnable {
 			mOut.println("Register: failed");
 		}
 	}
-	@Override
-    public void play() {
-		
-    }
 }

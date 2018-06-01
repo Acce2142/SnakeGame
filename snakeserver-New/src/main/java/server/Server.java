@@ -22,6 +22,9 @@ public class Server {
             public void run() {
                 boolean listening= true;
                 try (ServerSocket socket = new ServerSocket(8080)) {
+                	// while the server is still online.
+                	// creates new player when a new client connects with it
+                	// server creates a thread to answer the new created client's request
                     while (listening) {
                     	PlayerHuman player = new PlayerHuman("player", mBoard, socket.accept());
                         PlayerPool.submit(player);
