@@ -22,7 +22,7 @@ public class PlayerHuman extends Player implements Runnable {
 	public PlayerHuman(String name, GameBoard board, Socket socket) {
 		super(name, board);
 		try {
-			//output
+			//output stream to the client
 			mOut = new PrintWriter(socket.getOutputStream(), true);
 			//input from the client
 			mIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
